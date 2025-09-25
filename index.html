@@ -130,7 +130,7 @@
                   
                   <div class="project-links">
                     <a class="project-link" href="https://www.figma.com/design/2zz1JtQKL5wygu6B2slSJa/%EA%B0%9C%EB%AF%B8%EC%9D%98-%EA%BF%88-PT?node-id=220-46&t=UPoc59UbGhuYp0yV-1" target="_blank" rel="noopener noreferrer">UI Figma 링크</a>
-                    <a class="project-link project-link--pdf" href="src/docs/ant/신유수_포트폴리오.pdf" download>포트폴리오 PDF 다운로드</a>
+                    <a class="project-link project-link--pdf" href="src/docs/ant/신유수_포트폴리오.pdf" download data-mobile-download-block>포트폴리오 PDF 다운로드 </a>
                   </div>
 
                 </div>
@@ -207,7 +207,7 @@
                     <a class="project-link" href="https://deardream-zeta.vercel.app" target="_blank" rel="noopener noreferrer">서비스 배포 링크</a>
                     <a class="project-link" href="https://github.com/tlsdbtn0507/deardream" target="_blank" rel="noopener noreferrer">GitHub 저장소</a>
                     <a class="project-link" href="https://www.figma.com/design/JqGcC6YF8hHNKvtC6LPzIb/%EC%9D%B4%EC%96%B4%EB%93%9C%EB%A6%BC?node-id=97-200&amp;t=OBwUyivMDzhekNmT-1" target="_blank" rel="noopener noreferrer" >UI Figma 링크</a>
-                    <a class="project-link project-link--pdf" href="src/docs/eardream/이어드림_포트폴리오.pdf" download="이어드림_포트폴리오.pdf">포트폴리오 PDF 다운로드</a>
+                    <a class="project-link project-link--pdf" href="src/docs/eardream/eardream_portfolio.pdf" download="eardream_portfolio.pdf" data-mobile-download-block>포트폴리오 PDF 다운로드</a>
                   </div>
                 </div>
               </article>
@@ -325,6 +325,23 @@
           ensureImageLoaded(slides[0]);
           update();
         });
+
+        const mobilePdfLinks = document.querySelectorAll('[data-mobile-download-block]');
+        if (mobilePdfLinks.length) {
+          const isMobileViewport = () => window.matchMedia('(max-width: 768px)').matches;
+          const warnAndBlock = (event) => {
+            if (!isMobileViewport()) {
+              return;
+            }
+            event.preventDefault();
+            const fileName = event.currentTarget?.getAttribute('download') || 'PDF 파일';
+            alert(`모바일 환경에서는 파일 용량이 커서 ${fileName} 다운로드를 지원하지 않습니다. 데스크톱에서 이용해주세요.`);
+          };
+
+          mobilePdfLinks.forEach((link) => {
+            link.addEventListener('click', warnAndBlock);
+          });
+        }
       });
     </script>
   </body>
